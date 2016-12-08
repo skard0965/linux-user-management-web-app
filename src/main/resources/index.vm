@@ -1,0 +1,7 @@
+#parse("layout.vm")
+#@mainLayout()
+<div class="container">
+    <p><a href="/user/">Show users</a></p>
+    <p>Show groups</p>
+</div>
+#end
