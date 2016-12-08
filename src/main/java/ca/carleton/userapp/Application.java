@@ -1,14 +1,5 @@
 package ca.carleton.userapp;
 
-import spark.ModelAndView;
-import spark.template.velocity.VelocityTemplateEngine;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.Map;
-
 import static spark.Spark.*;
 import static spark.debug.DebugScreen.enableDebugScreen;
 
@@ -17,7 +8,11 @@ import static spark.debug.DebugScreen.enableDebugScreen;
  */
 public class Application {
 
+    public static LinuxUserDao linuxUserDao;
+
     public static void main(String[] args) {
+
+        linuxUserDao = new LinuxUserDao();
 
         port(8888);
 
@@ -26,15 +21,6 @@ public class Application {
         enableDebugScreen();
 
         before("*", Filters.addTrailingSlashes);
-
-        String cmd = ListUsersController.runCommandAsHtml("cut -d : -f 1 /etc/passwd");
-
-        get("/list/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            model.put("list", cmd);
-            return new ModelAndView(model, "list.vm");
-
-        }, new VelocityTemplateEngine());
 
         get("/", IndexController.serveIndexPage);
 
