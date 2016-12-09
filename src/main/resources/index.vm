@@ -7,7 +7,6 @@
     <h2><a href="/show-groups/">Show groups</a></h2>
     <h2><a href="/add-group/">Add group</a></h2>
     <h2><a href="/remove-group/">Remove group</a></h2>
-    <h2><a href="/edit-user/">Edit user</a></h2>
     <h2><a href="/edit-group/">Edit group</a></h2>
 </div>
 #end

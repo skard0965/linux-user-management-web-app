@@ -13,4 +13,9 @@ public class GroupDao {
         String command = "sudo groupdel " + group;
         return SystemUtil.runCommand(command);
     }
+
+    public String editGroupName(String group, String name) {
+        String command = "sudo groupmod -n " + name + " " + group;
+        return SystemUtil.runCommand(command);
+    }
 }
