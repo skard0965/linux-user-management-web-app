@@ -1,0 +1,38 @@
+#parse("layout.vm")
+#@mainLayout()
+<div class="container">
+    <div class="col-md-12">
+        #if($editGroupNameWarning)
+            <div class="alert alert-warning" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span class="sr-only">Warning:</span>
+                $editGroupNameWarning
+            </div>
+        #elseif($editGroupNameSucceeded)
+            <div class="alert alert-success" role="alert">
+                <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+                <span class="sr-only">Info:</span>
+                $editGroupNameSucceeded
+            </div>
+        #end
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2 class="panel-title">Edit Group Name</h2>
+            </div>
+            <div class="panel-body">
+                <form accept-charset="UTF-8" role="form" method="post" action="/edit-group-name/">
+                    <fieldset>
+                        <div class="form-group">
+                            <input class="form-control" name="group" value="$group" readonly>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" name="name" placeholder="New group name..." value="" required>
+                        </div>
+                        <input class="btn btn-lg btn-success btn-block" type="submit" value="Edit">
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+#end

@@ -47,6 +47,11 @@ public class Application {
         get("/remove-group/", GroupController.serveRemoveGroupPage);
         post("/remove-group/", GroupController.handleRemoveGroupPost);
 
+        get("/edit-group/", GroupController.serveGroupEditPage);
+        post("/edit-group/", GroupController.handleEditGroupPost);
+
+        post("/edit-group-name/", GroupController.handleEditGroupNamePost);
+
         get("*", ViewUtil.notFound);
 
     }

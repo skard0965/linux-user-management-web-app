@@ -62,4 +62,35 @@ public class GroupController {
         model.put("groups", SystemUtil.getListOfGroups());
         return ViewUtil.render(request, model, "show-groups.vm");
     };
+
+    public static Route serveGroupEditPage = (Request request, Response response) -> {
+        LoginController.ensureUserIsLoggedIn(request, response);
+        Map<String, Object> model = new HashMap<>();
+        model.put("groups", SystemUtil.getListOfGroups());
+        return ViewUtil.render(request, model, "edit-group.vm");
+    };
+
+    public static Route handleEditGroupPost = (Request request, Response response) -> {
+        LoginController.ensureUserIsLoggedIn(request, response);
+        Map<String, Object> model = new HashMap<>();
+        final String group = request.queryParams("group");
+        model.put("group", group);
+        return ViewUtil.render(request, model, "edit-group-name.vm");
+    };
+
+    public static Route handleEditGroupNamePost = (Request request, Response response) -> {
+        LoginController.ensureUserIsLoggedIn(request, response);
+        Map<String, Object> model = new HashMap<>();
+        final String group = request.queryParams("group");
+        final String name = request.queryParams("name");
+
+        model.put("group", group);
+        String editGroupNameResult = groupDao.editGroupName(group, name);
+        if (!editGroupNameResult.isEmpty()) {
+            model.put("editGroupNameWarning", editGroupNameResult);
+            return ViewUtil.render(request, model, "edit-group-name.vm");
+        }
+        model.put("editGroupNameSucceeded", "Group \'" + group + "\' has been successfully renamed into \'" + name + "\'");
+        return ViewUtil.render(request, model, "edit-group-name.vm");
+    };
 }
