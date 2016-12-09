@@ -1,0 +1,29 @@
+#parse("layout.vm")
+#@mainLayout()
+<div class="container">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2 class="panel-title">Add User</h2>
+            </div>
+            <div class="panel-body">
+                <form accept-charset="UTF-8" role="form" method="post">
+                    <fieldset>
+                        <div class="form-group">
+                            <input class="form-control" placeholder="New Username" name="username" value="" required>
+                        </div>
+                        <div class="form-group">
+                            <select class="selectpicker" name="groups" title="Choose Group(s)" data-width="100%" data-size="5" multiple>
+                                #foreach($group in $groups)
+                                    <option>$group</option>
+                                #end
+                            </select>
+                        </div>
+                        <input class="btn btn-lg btn-success btn-block" type="submit" value="Add">
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+#end

@@ -31,6 +31,9 @@ public class Application {
 
         get("/user/", UserController.serveUsersPage);
 
+        get("/add-user/", UserController.serveAddUserPage);
+        post("/add-user/", UserController.handleAddUserPost);
+
         get("*", ViewUtil.notFound);
 
     }

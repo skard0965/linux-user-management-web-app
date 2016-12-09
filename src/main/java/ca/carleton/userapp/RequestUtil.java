@@ -16,6 +16,10 @@ public class RequestUtil {
         return request.queryParams("username");
     }
 
+    public static String getQueryGroups(Request request) {
+        return request.queryParams("groups");
+    }
+
     public static String getQueryPassword(Request request) {
         return request.queryParams("password");
     }

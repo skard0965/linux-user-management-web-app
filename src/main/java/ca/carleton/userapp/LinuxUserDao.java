@@ -29,6 +29,18 @@ public class LinuxUserDao {
         return linuxUsers;
     }
 
+    public List<String> getListOfGroups() {
+        return Arrays.asList(runCommand("cut -d : -f 1 /etc/group").split("\n"));
+    }
+
+    public void addUser(String username, List<String> groups) {
+        String groupsStr = "";
+        for (String group : groups) {
+            groupsStr = group + ",";
+        }
+       groupsStr = groupsStr.substring(0, groupsStr.length() - 2);
+    }
+
     private static String runCommand(String command) {
         String result = "";
         String s;
