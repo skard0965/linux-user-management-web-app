@@ -24,7 +24,7 @@ public class LinuxUserDao {
              * YOUR_GROUP_NAME ALL= NOPASSWD: ALL
              *
              */
-            linuxUsers.add(new LinuxUser(user, runCommand("sudo id -gn " + user)));
+            linuxUsers.add(new LinuxUser(user, runCommand("sudo id -Gn " + user)));
         }
         return linuxUsers;
     }
@@ -33,12 +33,30 @@ public class LinuxUserDao {
         return Arrays.asList(runCommand("cut -d : -f 1 /etc/group").split("\n"));
     }
 
-    public void addUser(String username, List<String> groups) {
-        String groupsStr = "";
-        for (String group : groups) {
-            groupsStr = group + ",";
+    /**
+     * Add User method
+     *
+     * @param username
+     * @param groupsStr
+     * @return Returns false if it failed.
+     */
+    public boolean addUser(String username, String groupsStr) {
+        String command = "sudo useradd -G " + groupsStr + " " + username;
+        String s;
+        String errOutput = "";
+        try {
+            // using the Runtime exec method:
+            Process p = Runtime.getRuntime().exec(command);
+            BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+            // read any errors from the attempted command
+            while ((s = stdError.readLine()) != null) { errOutput += s + "\n"; }
+        } catch (IOException e) { errOutput += e.getMessage();
+        } finally {
+            if (errOutput.isEmpty())
+                return true;
+            else
+                return false;
         }
-       groupsStr = groupsStr.substring(0, groupsStr.length() - 2);
     }
 
     private static String runCommand(String command) {

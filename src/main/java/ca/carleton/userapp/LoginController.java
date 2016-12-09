@@ -27,7 +27,7 @@ public class LoginController {
 		model.put("authenticationSucceeded", true);
 		request.session().attribute("currentUser", getQueryUsername(request));
 		if (getQueryLoginRedirect(request) != null) {
-			System.out.println("redirect!");
+			// Redirect happening!
 			response.redirect(getQueryLoginRedirect(request));
 		}
 		return ViewUtil.render(request, model, "index.vm");

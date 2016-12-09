@@ -2,6 +2,19 @@
 #@mainLayout()
 <div class="container">
     <div class="col-md-12">
+        #if($addUserFailed)
+            <div class="alert alert-danger" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span class="sr-only">Error:</span>
+                Add user failed.
+            </div>
+        #elseif($addUserSucceeded)
+            <div class="alert alert-success" role="alert">
+                <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+                <span class="sr-only">Info:</span>
+                $addUserSucceeded
+            </div>
+        #end
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h2 class="panel-title">Add User</h2>

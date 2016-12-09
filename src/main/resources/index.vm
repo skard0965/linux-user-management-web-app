@@ -1,7 +1,8 @@
 #parse("layout.vm")
 #@mainLayout()
 <div class="container">
-    <p><a href="/user/">Show users and groups</a></p>
-    <p><a href="/add-user/">Add user</a></p>
+    <h2><a href="/user/">Show users and groups</a></h2>
+    <h2><a href="/add-user/">Add user</a></h2>
+    <h2><a href="/remove-user/">Remove user</a></h2>
 </div>
 #end
