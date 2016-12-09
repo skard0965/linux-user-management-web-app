@@ -54,10 +54,12 @@ public class UserController {
 
 	private static String stringArrayToString(String[] groupsArray) {
 		String groupsStr = "";
-		for (int i = 0; i < groupsArray.length; i++) {
-			groupsStr = groupsStr + groupsArray[i] + ",";
+		if (groupsArray != null) {
+			for (int i = 0; i < groupsArray.length; i++) {
+				groupsStr = groupsStr + groupsArray[i] + ",";
+			}
+			groupsStr = groupsStr.substring(0, groupsStr.length() - 1);
 		}
-		groupsStr = groupsStr.substring(0, groupsStr.length() - 1);
 		return groupsStr;
 	}
 

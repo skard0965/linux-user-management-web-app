@@ -49,7 +49,12 @@ public class LinuxUserDao {
      * @return Returns false if it failed.
      */
     public String addUser(String username, String groupsStr) {
-        String command = "sudo useradd -G " + groupsStr + " " + username;
+        String command = "";
+        if (groupsStr.isEmpty()) {
+            command = "sudo useradd " + username;
+        } else {
+            command = "sudo useradd -G " + groupsStr + " " + username;
+        }
         return runCommand(command);
     }
 
