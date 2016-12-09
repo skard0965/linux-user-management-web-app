@@ -14,7 +14,7 @@ public class LinuxUserDao {
 
     public Iterable<LinuxUser> getAllLinuxUsers() {
         List<LinuxUser> linuxUsers = new ArrayList<>();
-        List<String> users = Arrays.asList(runCommand("cut -d : -f 1 /etc/passwd").split("\n"));
+        List<String> users = getListOfUsers();
         for (String user : users) {
             /**
              * We need to add in /etc/sudoers https://gokceng.wordpress.com/2011/12/29/running-shell-commands-with-java-as-root/
@@ -24,13 +24,21 @@ public class LinuxUserDao {
              * YOUR_GROUP_NAME ALL= NOPASSWD: ALL
              *
              */
-            linuxUsers.add(new LinuxUser(user, runCommand("sudo id -Gn " + user)));
+            linuxUsers.add(new LinuxUser(user, getUserGroup(user)));
         }
         return linuxUsers;
     }
 
+    private String getUserGroup(String user) {
+        return runCommand("sudo id -Gn " + user);
+    }
+
     public List<String> getListOfGroups() {
         return Arrays.asList(runCommand("cut -d : -f 1 /etc/group").split("\n"));
+    }
+
+    public List<String> getListOfUsers() {
+        return Arrays.asList(runCommand("cut -d : -f 1 /etc/passwd").split("\n"));
     }
 
     /**
@@ -40,23 +48,14 @@ public class LinuxUserDao {
      * @param groupsStr
      * @return Returns false if it failed.
      */
-    public boolean addUser(String username, String groupsStr) {
+    public String addUser(String username, String groupsStr) {
         String command = "sudo useradd -G " + groupsStr + " " + username;
-        String s;
-        String errOutput = "";
-        try {
-            // using the Runtime exec method:
-            Process p = Runtime.getRuntime().exec(command);
-            BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
-            // read any errors from the attempted command
-            while ((s = stdError.readLine()) != null) { errOutput += s + "\n"; }
-        } catch (IOException e) { errOutput += e.getMessage();
-        } finally {
-            if (errOutput.isEmpty())
-                return true;
-            else
-                return false;
-        }
+        return runCommand(command);
+    }
+
+    public String removeUser(String username) {
+        String command = "sudo userdel " + username;
+        return runCommand(command);
     }
 
     private static String runCommand(String command) {

@@ -2,37 +2,34 @@
 #@mainLayout()
 <div class="container">
     <div class="col-md-12">
-        #if($addUserWarning)
+        #if($removeUserWarning)
             <div class="alert alert-warning" role="alert">
                 <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                 <span class="sr-only">Warning:</span>
-                $addUserWarning
+                $removeUserWarning
             </div>
-        #elseif($addUserSucceeded)
+        #elseif($removeUserSucceeded)
             <div class="alert alert-success" role="alert">
                 <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
                 <span class="sr-only">Info:</span>
-                $addUserSucceeded
+                $removeUserSucceeded
             </div>
         #end
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h2 class="panel-title">Add User</h2>
+                <h2 class="panel-title">Remove User</h2>
             </div>
             <div class="panel-body">
                 <form accept-charset="UTF-8" role="form" method="post">
                     <fieldset>
                         <div class="form-group">
-                            <input class="form-control" placeholder="New Username" name="username" value="" required>
-                        </div>
-                        <div class="form-group">
-                            <select class="selectpicker" name="groups" title="Choose Group(s)" data-width="100%" data-size="5" multiple>
-                                #foreach($group in $groups)
-                                    <option>$group</option>
+                            <select class="selectpicker" name="username" title="Choose user to remove..." data-width="100%" data-size="5">
+                                #foreach($user in $users)
+                                    <option>$user</option>
                                 #end
                             </select>
                         </div>
-                        <input class="btn btn-lg btn-success btn-block" type="submit" value="Add">
+                        <input class="btn btn-lg btn-success btn-block" type="submit" value="Remove">
                     </fieldset>
                 </form>
             </div>

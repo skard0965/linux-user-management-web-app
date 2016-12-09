@@ -34,6 +34,10 @@ public class Application {
         get("/add-user/", UserController.serveAddUserPage);
         post("/add-user/", UserController.handleAddUserPost);
 
+        get("/remove-user/", UserController.serveRemoveUserPage);
+        post("/remove-user/", UserController.handleRemoveUserPost);
+
+
         get("*", ViewUtil.notFound);
 
     }
