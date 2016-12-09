@@ -1,0 +1,39 @@
+#parse("layout.vm")
+#@mainLayout()
+<div class="container">
+    <div class="col-md-12">
+        #if($removeGroupWarning)
+            <div class="alert alert-warning" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span class="sr-only">Warning:</span>
+                $removeGroupWarning
+            </div>
+        #elseif($removeGroupSucceeded)
+            <div class="alert alert-success" role="alert">
+                <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+                <span class="sr-only">Info:</span>
+                $removeGroupSucceeded
+            </div>
+        #end
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2 class="panel-title">Remove Group</h2>
+            </div>
+            <div class="panel-body">
+                <form accept-charset="UTF-8" role="form" method="post">
+                    <fieldset>
+                        <div class="form-group">
+                            <select class="selectpicker" name="group" title="Choose group to remove..." data-width="100%" data-size="5">
+                                #foreach($group in $groups)
+                                    <option>$group</option>
+                                #end
+                            </select>
+                        </div>
+                        <input class="btn btn-lg btn-success btn-block" type="submit" value="Remove">
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+#end

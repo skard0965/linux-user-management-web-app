@@ -13,20 +13,21 @@ public class UserController {
 	public static Route serveAddUserPage = (Request request, Response response) -> {
 		LoginController.ensureUserIsLoggedIn(request, response);
 		Map<String, Object> model = new HashMap<>();
-		model.put("groups", linuxUserDao.getListOfGroups());
+		model.put("groups", SystemUtil.getListOfGroups());
 		return ViewUtil.render(request, model, "add-user.vm");
 	};
 
 	public static Route handleAddUserPost = (Request request, Response response) -> {
 		LoginController.ensureUserIsLoggedIn(request, response);
 		Map<String, Object> model = new HashMap<>();
-		model.put("groups", linuxUserDao.getListOfGroups());
-		String addUserResult = linuxUserDao.addUser(request.queryParams("username"), stringArrayToString(request.queryParamsValues("groups")));
+		model.put("groups", SystemUtil.getListOfGroups());
+		final String username = request.queryParams("username");
+		String addUserResult = linuxUserDao.addUser(username, stringArrayToString(request.queryParamsValues("groups")));
 		if (!addUserResult.isEmpty()) {
 			model.put("addUserWarning", addUserResult);
 			return ViewUtil.render(request, model, "add-user.vm");
 		}
-		model.put("addUserSucceeded", "User " + request.queryParams("username") + " created successfully.");
+		model.put("addUserSucceeded", "User " + username + " created successfully.");
 		return ViewUtil.render(request, model, "add-user.vm");
 	};
 
@@ -34,14 +35,14 @@ public class UserController {
 	public static Route serveRemoveUserPage = (Request request, Response response) -> {
 		LoginController.ensureUserIsLoggedIn(request, response);
 		Map<String, Object> model = new HashMap<>();
-		model.put("users", linuxUserDao.getListOfUsers());
+		model.put("users", SystemUtil.getListOfUsers());
 		return ViewUtil.render(request, model, "remove-user.vm");
 	};
 
 	public static Route handleRemoveUserPost = (Request request, Response response) -> {
 		LoginController.ensureUserIsLoggedIn(request, response);
 		Map<String, Object> model = new HashMap<>();
-		model.put("users", linuxUserDao.getListOfUsers());
+		model.put("users", SystemUtil.getListOfUsers());
 		final String username = request.queryParams("username");
 		String removeUserResult = linuxUserDao.removeUser(username);
 		if (!removeUserResult.isEmpty()) {
@@ -74,8 +75,7 @@ public class UserController {
 		LoginController.ensureUserIsLoggedIn(request, response);
 		Map<String, Object> model = new HashMap<>();
 		model.put("users", linuxUserDao.getAllLinuxUsers());
-		return ViewUtil.render(request, model, "user.vm");
+		return ViewUtil.render(request, model, "show-users.vm");
 	};
-
 
 }

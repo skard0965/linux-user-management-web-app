@@ -9,10 +9,12 @@ import static spark.debug.DebugScreen.enableDebugScreen;
 public class Application {
 
     public static LinuxUserDao linuxUserDao;
+    public static GroupDao groupDao;
 
     public static void main(String[] args) {
 
         linuxUserDao = new LinuxUserDao();
+        groupDao = new GroupDao();
 
         port(8888);
 
@@ -29,7 +31,7 @@ public class Application {
 
         post("/logout/", LoginController.handleLogoutPost);
 
-        get("/user/", UserController.serveUsersPage);
+        get("/show-users/", UserController.serveUsersPage);
 
         get("/add-user/", UserController.serveAddUserPage);
         post("/add-user/", UserController.handleAddUserPost);
@@ -37,6 +39,13 @@ public class Application {
         get("/remove-user/", UserController.serveRemoveUserPage);
         post("/remove-user/", UserController.handleRemoveUserPost);
 
+        get("/show-groups/", GroupController.serveGroupsPage);
+
+        get("/add-group/", GroupController.serveAddGroupPage);
+        post("/add-group/", GroupController.handleAddGroupPost);
+
+        get("/remove-group/", GroupController.serveRemoveGroupPage);
+        post("/remove-group/", GroupController.handleRemoveGroupPost);
 
         get("*", ViewUtil.notFound);
 

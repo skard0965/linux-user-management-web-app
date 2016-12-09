@@ -1,6 +1,0 @@
-#parse("layout.vm")
-#@mainLayout()
-    <div class="container">
-        <h1>List</h1>
-    </div>
-#end
